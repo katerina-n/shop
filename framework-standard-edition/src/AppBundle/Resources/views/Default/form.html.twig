@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout.html.twig' %}
+{% block body %}
+    {% for values in basket %}
+        {{ values.name }}
+        <br>
+
+
+        {{ values.price }}
+
+{% endfor %}
+        <hr>
+
+{% endblock %}

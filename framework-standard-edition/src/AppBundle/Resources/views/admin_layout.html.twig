@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<a href="{{ path('admin_homepage') }}">ADmimMath</a>
+<a href="{{ path('admin_formul') }}">ADminFormuls</a>
+<a href="{{ path('admin_tables') }}">ADminTables</a>
+<a href="{{ path('admin_homework') }}">AdminHomeWork</a>
+<a href="{{ path('admin_test') }}">Test</a>
+<a href="{{ path('admin_feedback') }}">CheckIn</a>
+<div class="flashes">
+    {% for flash in app.session.getFlashbag().get('success') %}
+        {{ flash }}
+    {% endfor %}
+</div>
+{% block body %}{% endblock %}
+</body>
+</html>

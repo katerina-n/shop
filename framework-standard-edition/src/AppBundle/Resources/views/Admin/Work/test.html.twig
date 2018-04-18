@@ -1,0 +1,10 @@
+{% extends 'AppBundle::admin_layout.html.twig' %}
+{% block body %}
+    {% for values in test %}
+        <a href={{ path('test_i', {id: values.id}) }}>{{values.testName }}</a>
+        <br>
+    {% endfor %}
+{% endblock %}
+{% block title %}
+    form test
+{% endblock %}

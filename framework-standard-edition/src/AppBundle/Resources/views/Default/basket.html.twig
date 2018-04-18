@@ -1,0 +1,21 @@
+{% extends 'AppBundle::layout.html.twig' %}
+{% block body %}
+    {% for values in book %}
+        {{ values.name }}
+
+        <br>
+
+
+            {{ values.price }}
+
+
+        <hr>
+
+        <br>
+
+
+    {% endfor %}
+    <form method ="post" action="{{ path('issue') }}">
+        <button>Оформить заказ</button>
+        </form>
+{% endblock %}

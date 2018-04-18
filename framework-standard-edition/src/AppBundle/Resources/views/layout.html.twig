@@ -1,0 +1,211 @@
+<!doctype html PUBLIC"-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+    <link rel="stylesheet" href="/resources/demos/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+ <style>
+        #slow_nav > ul > li {
+            list-style: none;
+            display: inline-block;
+            position: relative;
+            padding: 0;
+        }
+
+        #slow_nav > ul > li > a {
+            font-size: 18px;
+            padding: 5px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        #slow_nav ul li ul {
+            position: absolute;
+            list-style: none;
+            text-align: center;
+            top: 0px;
+            font-size: 15px;
+            display: none;
+        }
+
+        #slow_nav ul li {
+            background-color: #333;
+            border-bottom: 1px solid #888;
+        }
+
+        #slow_nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        #slow_nav ul li ul li a {
+            padding: 5px 12px;
+            display: block;
+        }
+
+        #slow_nav ul li:hover {
+            background-color: #444;
+        }
+
+        #slow_nav ul li:first-child {
+            margin-top: 25px;
+            position: relative;
+
+        }
+
+        #slow_nav ul > li:hover > ul {
+            display: block;
+        }
+
+        .pop-up {
+            border: 5px solid;
+            border-bottom-color: #333333;
+            position: absolute;
+            margin: 5% auto;
+            left: 700px;
+            top: 0px;
+            background-color: white;
+            z-index: 4;
+        }
+
+        .left, .center, .right {
+            float: left;
+            margin-top: 80px;
+
+            margin-right: 25px;
+            text-align: center;
+
+        }
+
+        .left, .right {
+            width: 10%;
+            /* //border-style: groove;*/
+        }
+
+        .center {
+            width: 100%;
+        }
+
+
+
+        h1 {
+            font-size: 7em;
+        }
+
+        .navbar-inverse {
+            font-size: 18px;
+            color: white;
+        }
+
+        .navbar-inverse a {
+            color: white;
+        }
+
+        #slow_nav ul li a {
+            font-size: 23px;
+        }
+
+        #slow_nav ul li ul li a {
+            font-size: 15px;
+        }
+
+        .navbar-inverse a:hover {
+            color: red;
+        }
+
+        #slow_nav ul li a:hover {
+            font-size: 23px;
+            color: red;
+        }
+    </style>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<a href="{{ path('homepage') }}">Книги</a>
+                <br>
+
+<nav class="navbar navbar-inverse" style="height: 72px; width: 1000px; ">
+    <nav id="slow_nav">
+        <a href="{{ path('fiction') }}">Художственная литература</a>
+<a href="{{ path('children') }}">Детская литература</a>
+<a href="{{ path('science') }}">Научная литература</a>
+<a href="{{ path('foreign') }}">Иностранная литература</a>
+             <a href="{{ path('maps') }}">Карты и путиводители</a>
+                <a href="{{ path('checkin') }}">Регистрация</a>
+        <a href="{{ path('basket') }}">Корзина</a>
+    </nav>
+</nav>
+<form method="post" action="{{ path('find') }}">
+    <div class="ui-widget" style="display: inline">
+        Найти по тегу:
+        <input type="text" class="search-query" name="tag" id="tag">
+    </div>
+    <button class="btn">find</button>
+</form>
+<div class="flashes">
+    {% for flash in app.session.getFlashbag().get('success') %}
+        {{ flash }}
+    {% endfor %}
+</div>
+
+<hr>
+<div class="container">
+
+    <div class="center">
+        {% block body %}{% endblock %}
+    </div>
+
+</div>
+<div class="row pop-up">
+    <div class="box small-6 large-centered">
+        <a class="close-button">&#10006;</a>
+        <h3>Подписаться на рассылку</h3>
+        <form method="post" action="../index.php?controller=default&action=find">
+            <input type="text" name="email" id="email">
+        </form>
+        <button>Send</button>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var availableTags = [
+            "fiction",
+            "children",
+            "science",
+            "foreign",
+            "maps"
+
+        ];
+        $("#tag").autocomplete({
+            source: availableTags
+        });
+    });
+    jQuery(document).ready(function ($) {
+        $('#slow_nav  ul li').hover(
+            function () {
+                $('ul', this).stop().slideDown(400);
+            },
+            function () {
+                $('ul', this).stop().slideUp(400);
+            }
+        );
+
+    });
+    $(function () {
+        $('.pop-up').hide();
+        $('.pop-up').fadeIn(15000);
+        $('.close-button').click(function (e) {
+
+            $('.pop-up').fadeOut();
+
+            e.stopPropagation();
+        });
+    });
+    </script>
+</body>
+</html>

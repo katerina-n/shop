@@ -1,0 +1,26 @@
+{% extends 'AppBundle::layout.html.twig' %}
+{% block body %}
+    {% for values in book %}
+        {{ values.name }}
+        <img style="width: 60px; height: 90px" src="../Photo/{{values.getPhoto()}}"/>
+        {% if (values.otherPhoto!=null) %}
+            <img style="width: 60px; height: 90px" src="../Photo/{{ values.otherPhoto }}"/>
+            {% endif %}
+        <br>
+        {{ values.content }}
+        <br>
+        {% if (values.sale!=null) %}
+            sale {{ values.sale }}
+        {% else %}
+            {{ values.price }}
+        {% endif %}
+
+        <hr>
+        {{ values.tags }}
+        <br>
+        <form method ="post" action="{{ path('redirectpage', {id: values.id}) }}">
+        <button>Buy</button>
+        </form>
+
+        {% endfor %}
+{% endblock %}

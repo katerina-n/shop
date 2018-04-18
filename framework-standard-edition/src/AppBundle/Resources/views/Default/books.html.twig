@@ -1,0 +1,220 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block body %}
+
+
+<div class="row">
+    <div style="display: inline-block; border-right: 1px solid grey;  border-left: 1px solid grey; font-size: large; color: black; " class="col-md-6"  >
+
+        <h4>  Художественная </h4>
+
+    {% for values in books_fiction %}
+        {% for key in values|keys %}
+        <a href={{ path('onebook') }}>{{values[key]['name']}}</a>
+            <img style="width: 20px; height: 30px" src="./Photo/{{values[key]['photo']}}">
+            <p style="font-size: 10px">{{values[key]['shortContent']}}</p><br>
+            {% if (values[key]['sale']!=null) %}
+           sale {{ values[key]['sale'] }}{{ values[key]['price']  }}
+            {% else %}
+                {{ values[key]['price'] }}
+                {% endif %}
+            <br>
+    {% endfor %}
+    {% endfor %}
+
+    </div>
+    <div style="display: inline-block; border-right: 1px solid grey; border-left: 1px solid grey; font-size: large; color: black;" class="col-md-6" >
+        <h4> Детская </h4>
+
+    {% for values in books_children %}
+        {% for key in values|keys %}
+        <a href={{ path('onebook') }}>{{values[key]['name']}}</a>
+            <img style="width: 20px; height: 30px" src="./Photo/{{values[key]['photo']}}">
+            <p style="font-size: 10px">{{values[key]['shortContent']}}</p><br>
+            {% if (values[key]['sale']!=null) %}
+            sale {{ values[key]['sale'] }} {{ values[key]['price']  }}
+        {% else %}
+            {{ values[key]['price'] }}
+        {% endif %}
+        <br>
+    {% endfor %}
+    {% endfor %}
+    </div>
+
+</div>
+<div class="row">
+    <div style="display: inline-block; border-right: 1px solid grey; border-left: 1px solid grey; font-size: large; color: black;" class="col-md-6" >
+        <h4 style="font-family: Georgia">  Научная </h4>
+
+    {% for values in books_science %}
+        {% for key in values|keys %}
+        <a href={{ path('onebook') }}>{{values[key]['name']}}</a>
+            <img style="width: 20px; height: 30px" src="./Photo/{{values[key]['photo']}}">
+            <p style="font-size: 10px">{{values[key]['shortContent']}}</p><br>
+            {% if (values[key]['sale']!=null) %}
+            sale {{ values[key]['sale'] }} {{ values[key]['price']  }}
+        {% else %}
+            {{ values[key]['price'] }}
+        {% endif %}
+        <br>
+    {% endfor %}
+    {% endfor %}
+    </div>
+
+
+    <div style="display: inline-block; border-right: 1px solid grey;  border-left: 1px solid grey; font-size: large; color: black;" class="col-md-6" >
+        <h4>  Иностранная </h4>
+
+    {% for values in books_foreign %}
+        {% for key in values|keys %}
+        <a href={{ path('onebook') }}>{{values[key]['name']}}</a>
+            <img style="width: 20px; height: 30px" src="./Photo/{{values[key]['photo']}}">
+            <p style="font-size: 10px">{{values[key]['shortContent']}}</p><br>
+            {% if (values[key]['sale']!=null) %}
+            sale {{ values[key]['sale'] }} {{ values[key]['price']  }}
+        {% else %}
+            {{ values[key]['price'] }}
+        {% endif %}
+        <br>
+    {% endfor %}
+    {% endfor %}
+    </div>
+</div>
+    <div class="row">
+     <div style="display: inline-block; border-right: 1px solid grey;  border-left: 1px solid grey; font-size: large; color: black;" class="col-md-6" >
+        <h4>  Карты </h4>
+
+         {% for values in books_maps %}
+             {% for key in values|keys %}
+             <a href={{ path('onebook') }}>{{values[key]['name']}}</a>
+                 <img style="width: 20px; height: 30px" src="./Photo/{{values[key]['photo']}}">
+                 <p style="font-size: 10px">{{values[key]['shortContent']}}</p><br>
+                 {% if (values[key]['sale']!=null) %}
+                 sale {{ values[key]['sale'] }} {{ values[key]['price']  }}
+             {% else %}
+                 {{ values[key]['price'] }}
+             {% endif %}
+             <br>
+         {% endfor %}
+         {% endfor %}
+    </div>
+</div>
+<div class="row">
+        <div class="col-md-4" style="display: inline-block" >
+            <strong>TOP юзеров</strong><br>
+        </div>
+</div>
+
+    <div class="panel-footer"><strong>книги</strong><br>
+        <div id="slider" style="display: inline"></div>
+        <img style="width: 30px; height: 40px" id="pic" alt="" style="display: inline"/>
+    </div>
+    <hr>
+
+    <script>
+        var i=0;
+
+        arrGif='{{ somebooks|join(',')}}';
+        arrName='{{imgbooks|join(',') }}';
+        var ar=arrGif.split(',');
+        var br=arrName.split(',');
+        // alert(ar);
+        setInterval( function fn(){
+
+            document.getElementById("slider").innerText = br[i+1];
+            if((ar).length>0){
+                if(ar[i+1] ==""){
+                    ar[i+1]="nophoto.jpg";
+
+                }
+                document.getElementById("pic").src = "./Photo/{arrGif[i]}".replace('{arrGif[i]}', ar[i+1]);}
+
+            i=i+2;
+            if (i > 5) {
+                i = 0;
+            }
+
+        }, 3000);
+
+
+
+
+    </script>
+
+
+
+
+    {#{% for values in users %}
+        <a href={{ path('homepage', {id: values.id}, {username: values.userName}) }}>{{values.userName}}</a>
+        <br>
+    {% endfor %}#}
+        </div>
+{# <?php for($j=0; $j<=count($users)-1; $j++): ?>
+            <small> <a href="../index.php?controller=default&action=showUser&id=<?=$users[$j]->getId();?>&username=<?=$users[$j]->getUserName();?>"><?=$users[$j]->getUserName()." ";?>
+                </a></small>
+            <?php endfor; ?>#}{#
+#}
+{#
+        </div>
+        <div  class="col-md-4 col-md-offset-4" style="display: inline-block">
+            <strong>TOP тем</strong>
+            #}{#
+#}
+{#{% for values in subjects %}<br>
+                <a href={{ path('homework', {id: values.id}, {username: values.userName}) }}>{{values.userName}}</a>
+                <br>
+                {% endfor %}#}{#
+#}
+{#
+            #}{#
+#}
+{#<?php for($j=0; $j<=2; $j++): ?>
+            <small> <?=$subjects[$j]->getTableName()." ";?></small>
+            <?php endfor; ?>#}{#
+#}
+{#
+        </div>
+    </div>
+    <hr>
+    <div class="panel-footer"><strong>Последние новости</strong><br>
+        <div id="slider" style="display: inline"></div>
+        <img id="pic" alt="" style="display: inline"/>
+    </div>
+    <hr>
+
+    <script>
+        var i=0;
+
+        arrGif='{{ lastnews|join(',')}}';
+arrName='{{lastnewsname|join(',') }}';
+        var ar=arrGif.split(',');
+        var br=arrName.split(',');
+       // alert(ar);
+        setInterval( function fn(){
+
+            document.getElementById("slider").innerText = br[i+1];
+            if((ar).length>0){
+               if(ar[i+1] ==""){
+                  ar[i+1]="nophoto.jpg";
+
+               }
+                document.getElementById("pic").src = "./Photo/{arrGif[i]}".replace('{arrGif[i]}', ar[i+1]);}
+
+            i=i+2;
+            if (i > 5) {
+                i = 0;
+            }
+
+        }, 3000);
+
+
+
+
+    </script>
+#}
+
+{% endblock %}
+
+{% block title %}
+    table
+{% endblock %}
